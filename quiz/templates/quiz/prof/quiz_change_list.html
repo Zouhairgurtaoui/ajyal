@@ -1,0 +1,47 @@
+{% extends "_base.html" %} 
+{% block title %}<title>Quizzes</title>{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-15 col-md-12">
+        <div class="card" style="min-height: 485px">
+            <div class="card-header card-header-text">
+                <h4 class="card-title">Quizzes</h4>
+            </div>
+        
+        <div class="card-content table-responsive">
+            <table class="table table-hover">
+                <thead class="text-primary">
+                    <tr>
+                        <th>Quiz</th>
+                        <th>Course</th>
+                        <th>Questions</th>
+                        <th>Taken</th>
+                        <th></th>
+                                
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in quizzes %}
+                        <tr>
+                            <td><a href="{% url 'teacher:quiz_change' quiz.pk %}">{{ quiz.name }}</a></td>
+                            <td>{{ quiz.course.title }}</td>
+                            <td>{{ quiz.questions_count }}</td>
+                            <td>{{ quiz.taken_count }}</td>
+                            <td class="text-right">
+                                <a href="{% url "teacher:quiz_results" quiz.pk %}" class="btn btn-primary">View results</a>
+                            </td>
+                        </tr>
+                                            
+                    {% empty %}
+                        <tr>
+                            <td class="bg-light text-center font-italic" colspan="5">You haven't created any quiz yet.</td>
+                        </tr>
+                    {% endfor %}             
+                    </tbody>
+                </table>
+            </div>
+               
+        </div>
+    </div>
+
+{% endblock content %}

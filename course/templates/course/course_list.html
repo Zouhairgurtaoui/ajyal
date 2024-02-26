@@ -1,0 +1,9 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <div class='row'>
+        {% for course in courses %}
+            {{course.title}}<br/>
+        {% endfor %}
+    </div>
+{% endblock content %}

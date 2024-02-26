@@ -6,9 +6,9 @@ from django.http import HttpResponse
 def index(request):
     if request.user.is_authenticated:
         if request.user.is_teacher:
-            return redirect('')
+            return redirect('teacher:quiz_change_list')
         elif request.user.is_student:
-            return redirect('')
+            return redirect('student:quiz_list')
         else:
             return redirect('admin/')
-    return HttpResponse('hello')
+    return render(request,'home.html')

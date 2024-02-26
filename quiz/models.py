@@ -28,6 +28,9 @@ class Answer(models.Model):
     date_created = models.DateTimeField(auto_now_add=timezone.now)
 
     def __str__(self) -> str:
-        return self.question.text+" "+self.text
+        return self.text
 
 
+class StudentAnswer(models.Model):
+    student = models.ForeignKey('users.Student', on_delete=models.CASCADE, related_name='quiz_student_answers')
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='+')

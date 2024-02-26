@@ -1,0 +1,37 @@
+{% extends '_base.html' %} {% block content %}
+<div class="row">
+  <div class="col-lg-15 col-md-12">
+    <div class="card" style="min-height: 485px">
+      <div class="card-header card-header-text">
+        <strong>Taken Quizzes</strong>
+        <span class="badge badge-pill badge-primary float-right"
+          >Average Score: {{ quiz_score.average_score|default_if_none:0.0}}</span
+        >
+      </div>
+      <div class="card-content table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Date</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for taken_quiz in taken_quizzes %}
+            <tr>
+              <td><a href="">{{ taken_quiz.student.user.username }}</a></td>
+              <td>{{ taken_quiz.date|date:'d-M-Y' }}</td>
+              <td>{{ taken_quiz.score }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer text-muted">
+        Total respondents: <strong>{{ total_taken_quizzes }}</strong>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

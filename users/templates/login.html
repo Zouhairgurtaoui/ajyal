@@ -1,17 +1,45 @@
+ {% extends "index.html" %}
  {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <link rel="stylesheet" href="{% static "css/index.css" %}">
-</head>
-<body>
-    <form action="" method="post">
+ {% block title %}
+  <title>Login</title>
+ {% endblock  %}
+ {% block content %}
+ <section>
+    <div class="container">
+    <form method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">login</button>
-    </form>
-</body>
-</html>
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example1">Email address</label>
+    {{form.username}}
+    
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example2">Password</label>
+    {{form.password}}
+    
+  </div>
+
+  
+
+    <div class="col">
+      <!-- Simple link -->
+      <a href="{% url "password_reset" %}">Forgot password?</a>
+    </div>
+
+    <div class="col justify-content-center">
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+  </div>
+
+
+  
+
+  
+  
+</form>
+</div class="container">
+</section>
+ {% endblock  %}
+    
