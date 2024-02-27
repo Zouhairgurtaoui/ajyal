@@ -7,7 +7,7 @@
         {% if user.is_teacher %}
             <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><img src="{% static "img/logo.png" %} " class="img-fluid"/><span>Ajyal design</span></h3>
+                <h3><img src="{% static "img/logo.png" %} " class="img-fluid"/><span>Ajyal</span></h3>
             </div>
             <ul class="list-unstyled components">
                 <li  class="active">
@@ -17,21 +17,15 @@
 		      <div class="small-screen navbar-display">
                 <li class="dropdown d-lg-none d-md-block d-xl-none d-sm-block">
                     <a href="#homeSubmenu0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-					<i class="material-icons">notifications</i><span> 4 notification</span></a>
+					<i class="material-icons">notifications</i><span> {{notification_count | default:"0"}} notification</span></a>
                     <ul class="collapse list-unstyled menu" id="homeSubmenu0">
                         <!-- notifications -->
+                                {% for notification in notifications %}
                                     <li>
-                                    <a href="#">You have 5 new messages</a>
+                                    <a href="">{{notification.content}}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">You're now friend with Mike</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Wish Mary on her birthday!</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">5 warnings in Server Console</a>
-                                    </li>
+                                {% endfor %}
+                                    
                     </ul>
                 </li>
 
@@ -93,7 +87,7 @@
         {% else %}
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><img src="{% static 'img/logo.png' %} " class="img-fluid"/><span>Ajyal design</span></h3>
+                <h3><img src="{% static 'img/logo.png' %} " class="img-fluid"/><span>Ajyal</span></h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -101,21 +95,20 @@
 		      <div class="small-screen navbar-display">
                 <li class="dropdown d-lg-none d-md-block d-xl-none d-sm-block">
                     <a href="#homeSubmenu0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-					<i class="material-icons">notifications</i><span> 4 notification</span></a>
+					<i class="material-icons">notifications</i><span> {{notification_count | default:"0"}} notification</span></a>
                     <ul class="collapse list-unstyled menu" id="homeSubmenu0">
-                        <!-- notifications -->
+                                    {% for notification in notifications %}
+                                    {% if notification.is_quiz_notif %}
+                                        <li>
+                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "take_quiz" notification.course_notifications.quiz.pk %}{% endif %}">{{notification.content}}</a>
+                                        </li>
+                                    {% else %}
                                     <li>
-                                    <a href="#">You have 5 new messages</a>
+                                        <a href="{% if notification.course_notifications.course.pk %} {% url "course_detail" notification.course_notifications.course.pk %}{% endif %}">{{notification.content}}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">You're now friend with Mike</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Wish Mary on her birthday!</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">5 warnings in Server Console</a>
-                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    
                     </ul>
                 </li>
 				
@@ -128,7 +121,7 @@
 			
 			
                 <li class="">
-                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="{% url "course_list" %}"  >
 					<i class="material-icons">menu_book</i><span>Courses</span></a>
                     
                 </li>

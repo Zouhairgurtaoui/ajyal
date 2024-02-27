@@ -94,3 +94,4 @@ class VisitedCourses(models.Model):
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	duration = models.DurationField()
+	formatted_duration = models.CharField(max_length=100,null=True)

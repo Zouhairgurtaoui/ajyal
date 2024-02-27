@@ -4,9 +4,8 @@ from . import views
 urlpatterns = [
     path('student/', include(([
     path('',views.StudentQuizListView.as_view(),name='quiz_list'),
-    path('take-quiz/',views.take_quiz,name='take_quiz'),
+    path('take-quiz/<int:pk>',views.take_quiz,name='take_quiz'),
     path('taken/', views.TakenQuizListView.as_view(), name='taken_quiz_list'),
-    path('quiz/<int:pk>/', views.take_quiz, name='take_quiz'),
    ],'quiz'),namespace='student')),
 
     path('teacher/', include(([

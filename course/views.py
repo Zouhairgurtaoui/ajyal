@@ -21,10 +21,10 @@ class CourseListView(LoginRequiredMixin,ListView):
 
     def  get_queryset(self):
         if self.request.user.is_teacher:
-            queryset= self.request.user.courses.annotate(course_count=Count('id', distinct=True))
+            queryset= self.request.user.courses.annotate(course_count=Count('id', distinct=True)).order_by('-posted')
         else:
             prefetch_queryset = self.request.user.student.modules.prefetch_related('courses')
-            queryset = Course.objects.filter(module__in=prefetch_queryset).distinct()  
+            queryset = Course.objects.filter(module__in=prefetch_queryset).distinct() .order_by('-posted') 
 
         return queryset
 

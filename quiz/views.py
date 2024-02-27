@@ -2,7 +2,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render,get_object_or_404
 from django.views.generic import (ListView,CreateView,UpdateView,DeleteView,DetailView)
 from django.utils.decorators import method_decorator
-#from course.models import Course
+from course.models import Course
 from users.decorators import student_required,teacher_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -28,7 +28,7 @@ class QuizListView(ListView):
         queryset = self.request.user.quizzes \
             .select_related('course') \
             .annotate(questions_count=Count('questions', distinct=True)) \
-            .annotate(taken_count=Count('taken_quizzes', distinct=True))
+            .annotate(taken_count=Count('taken_quizzes', distinct=True)).order_by('-date_created')
         return queryset
 
 
@@ -116,7 +116,7 @@ class QuizResultsView(UserPassesTestMixin,DetailView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
-        return self.request.user.quizzes.all()
+        return self.request.user.quizzes.all().order_by('-date_created')
     
     def test_func(self) -> bool | None:
         quiz = self.get_object()
@@ -258,7 +258,10 @@ def take_quiz(request, pk):
     total_questions = quiz.questions.count()
     unanswered_questions = student.get_unanswered_questions(quiz)
     total_unanswered_questions = unanswered_questions.count()
-    progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+    try:
+        progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
+    except ZeroDivisionError:
+        return redirect('student:quiz_list')
     question = unanswered_questions.first()
 
     if request.method == 'POST':

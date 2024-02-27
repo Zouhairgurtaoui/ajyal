@@ -20,21 +20,14 @@
                             <li class="dropdown nav-item active">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
                                    <span class="material-icons">notifications</span>
-								   <span class="notification">4</span>
+								   <span class="notification">{{notification_count | default:"0"}}</span>
                                </a>
                                 <ul class="dropdown-menu">
+                                    {% for notification in notifications %}
                                     <li>
-                                        <a href="#">You have 5 new messages</a>
+                                    <a href="">{{notification.content}}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">You're now friend with Mike</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Wish Mary on her birthday!</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">5 warnings in Server Console</a>
-                                    </li>
+                                {% endfor %}
                                   
                                 </ul>
                             </li>
@@ -54,22 +47,23 @@
                             <li class="dropdown nav-item active">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
                                    <span class="material-icons">notifications</span>
-								   <span class="notification">4</span>
+								   <span class="notification">{{notification_count | default:"0"}}</span>
                                </a>
                                <!-- notifications here-->
                                 <ul class="dropdown-menu">
+                                    {% if notifications %}
+                                    {% for notification in notifications %}
+                                    {% if notification.is_quiz_notif %}
+                                        <li>
+                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "take_quiz" notification.course_notifications.quiz.pk %}{% endif %}" data-quiz-id={{notification.quiz_notifications.quiz.pk}}>{{notification.content}}</a>
+                                        </li>
+                                    {% elif notification.is_course_notif %}
                                     <li>
-                                        <a href="#">You have 5 new messages</a>
+                                        <a href="{% if notification.course_notifications.course.pk %} {% url "course_detail" notification.course_notifications.course.pk %}{% endif %}">{{notification.content}}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">You're now friend with Mike</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Wish Mary on her birthday!</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">5 warnings in Server Console</a>
-                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
                                   
                                 </ul>
                             </li>

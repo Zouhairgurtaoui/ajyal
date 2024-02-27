@@ -1,26 +1,16 @@
 {% extends "_base.html" %} 
-{% block head %}
-<style>
-    .small-img{
-      max-width: 100%;
-      height: 250px;
-    }
-    
-    
-  </style>
-{% endblock head %}
 {% block content %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    
   {% for student in students %}
-    <div class="col-sm-4 ">
-        <div class="card">
-          <img src="{{student.picture.url}}" class="card-img-top small-img" alt="Image">
-          <div class="card-body">
-            <h5 class="card-title"><a href="{% url "user_profile" student.user.username %}">{{student.user.username}}</a></h5>
-          </div>
+    <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ student.picture.url }}" class="card-img-top" alt="Profile Picture">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'user_profile' student.user.username %}">{{ student.user.get_full_name| default:student.user.username }}</a></h5>
+                    <p class="card-text">{{ student.user.email }}</p>
+                </div>
+            </div>
         </div>
-    </div>
   {% endfor %}
     
 </div>
