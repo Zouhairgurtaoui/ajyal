@@ -37,7 +37,7 @@ class Student(models.Model):
 	quizzes = models.ManyToManyField(Quiz, through='TakenQuiz')
 	courses = models.ManyToManyField(Course,through='VisitedCourses')
 	date_naissance=models.DateField(null=True,blank=True)
-	picture = models.ImageField(upload_to=user_directory_path_profile,blank=True,null=True)
+	picture = models.ImageField(upload_to=user_directory_path_profile,default='default.jpg')
 
 	def get_unanswered_questions(self, quiz):
 		answered_questions = self.quiz_student_answers \
@@ -61,8 +61,8 @@ class Student(models.Model):
 		
 	
 class Prof(models.Model):
-	picture = models.ImageField(upload_to=user_directory_path_profile,blank=True,null=True)
-	prof = models.OneToOneField(User,on_delete=models.CASCADE)
+	picture = models.ImageField(upload_to=user_directory_path_profile,null=True,default='default.jpg')
+	user = models.OneToOneField(User,on_delete=models.CASCADE)
 	date_naissance=models.DateField(null=True,blank=True)
 
 	def save(self, *args, **kwargs):
@@ -90,7 +90,7 @@ class StudentAnswer(models.Model):
 
 class VisitedCourses(models.Model):
 	student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='visited_courses')
-	course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='+')
+	course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='visited_courses')
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
 	duration = models.DurationField()

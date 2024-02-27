@@ -25,6 +25,7 @@ class Module(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=100)
+    image = models.ImageField(default='default_course_img.jpeg')
     file = models.FileField(upload_to=user_directory_path)
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='courses')
     prof = models.ForeignKey('users.User',on_delete=models.CASCADE,related_name='courses')

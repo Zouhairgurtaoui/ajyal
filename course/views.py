@@ -7,14 +7,17 @@ from users.decorators import student_required,teacher_required
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .models import Course
+from .forms import CourseCreateForm
+
 
 class CourseListView(LoginRequiredMixin,ListView):
     model = Course
     ordering = ('-posted', )
     template_name = 'course/course_list.html'
     context_object_name = 'courses'
+    paginate_by = 10
 
     def  get_queryset(self):
         if self.request.user.is_teacher:
@@ -28,13 +31,11 @@ class CourseListView(LoginRequiredMixin,ListView):
 @method_decorator([login_required,teacher_required],name='dispatch')
 class TeacherCourseCreateView(CreateView):
     model = Course
-    fields = ('title','file','module')
+    form_class = CourseCreateForm
     template_name = 'course/course_add_form.html'
+    
 
     def form_valid(self, form):
-        file = form.cleaned_data['file']
-        if not file.name.endswith('.pdf'):
-            raise ValidationError('Uploaded file is not a PDF')
         course = form.save(commit=False)
         course.prof = self.request.user
         course.save()
@@ -44,7 +45,7 @@ class TeacherCourseCreateView(CreateView):
 
 class CourseDetailView(LoginRequiredMixin,DetailView):
     model = Course
-    context_object_name = 'courses'
+    context_object_name = 'course'
     template_name = 'course/course_detail.html'
 
     def get_context_data(self, **kwargs):
@@ -52,4 +53,28 @@ class CourseDetailView(LoginRequiredMixin,DetailView):
         context['pdf_url'] = self.object.file.url
         return context
 
-       
+@method_decorator([login_required,teacher_required],name='dispatch')
+class CourseDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = Course
+    template_name = 'course/course_delete_confirm.html'  
+    context_object_name = 'course'
+    success_url = '/course/'
+
+    def test_func(self) -> bool | None:
+        course=self.get_object()
+        if course.prof == self.request.user:
+            return True
+        return False
+@method_decorator([login_required,teacher_required],name='dispatch')
+class CourseUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model = Course
+    form_class = CourseCreateForm
+    context_object_name = "course"
+    template_name = 'course/course_change_form.html'
+    success_url = '/course/'
+
+    def test_func(self) -> bool | None:
+        course = self.get_object()
+        if course.prof == self.request.user:
+            return True
+        return False

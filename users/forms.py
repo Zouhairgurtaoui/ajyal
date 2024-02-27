@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm,UsernameField
-from .models import Student,Prof
+from .models import Student,Prof, User
 
 class UserLoginForm(AuthenticationForm):
     username = UsernameField(label='Email or Username',
@@ -18,8 +18,17 @@ class UserLoginForm(AuthenticationForm):
                                         'class': 'form-control'
                                     }
                                 ))
+    
 
-class StudentUpdateProfile(forms.ModelForm):
+class UserUpdateForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='First Name',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Last Name',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name']
+
+class StudentUpdateForm(forms.ModelForm):
     picture = forms.FileField(label='Picture',
         widget=forms.FileInput(
         attrs={
@@ -30,7 +39,7 @@ class StudentUpdateProfile(forms.ModelForm):
         model = Student
         fields = ['picture']
 
-class ProfUpdateProfile(forms.ModelForm):
+class ProfUpdateForm(forms.ModelForm):
     picture = forms.FileField(label='Picture',
                               widget=forms.FileInput(
                                   attrs = {

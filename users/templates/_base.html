@@ -17,9 +17,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        
+        .btn-as-text {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: black;
+        cursor: pointer;
+        text-decoration: none; 
+    }
+    </style>
     {% block head %}
     
     {% endblock head %}
+    
 	
 	
 	
@@ -57,7 +70,6 @@
 			{% block content %}
             {% endblock content %}
             
-            </div>
             </div>
 					
 		
@@ -109,7 +121,7 @@
 
 
 	
-  
+
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <script src="{% static "js/jquery-3.3.1.slim.min.js" %}"></script>
@@ -117,7 +129,7 @@
    <script src="{% static "js/bootstrap.min.js" %}"></script>
    <script src="{% static "js/jquery-3.3.1.min.js" %} "></script>
   
-  
+  {% block scripts %}{% endblock scripts %}
   <script type="text/javascript">
   $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -136,8 +148,6 @@
            
        
 </script>
-  
-  
 
 
 

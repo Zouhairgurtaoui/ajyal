@@ -41,7 +41,7 @@
 
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url "edit_profile" %}">
                                     <img src="{% if user.prof.picture %}{{user.prof.picture.url}}{% endif %} " class="img-fluid rounded-circle me-3" width="35">
 								</a>
                             </li>
@@ -76,7 +76,7 @@
 
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url "edit_profile" %}">
                                     <img src="{% if user.student.picture %}{{user.student.picture.url}}{% endif %} " class="img-fluid rounded-circle me-3" width="35">
 								</a>
                             </li>

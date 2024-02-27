@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-s1!lv)v*4^_qreu=f(!$c*)6lq=ers8418pj4n3r@j1a2xr#eq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,6 +62,8 @@ AUTHENTICATION_BACKENDS = [
     'users.authentication.EmailAuthBackend',
 ]
 ROOT_URLCONF = 'ajyal.urls'
+
+
 
 TEMPLATES = [
     {
@@ -145,4 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
+#CONTENT_TYPE='module'
+X_FRAME_OPTIONS = 'SAMEORIGIN'

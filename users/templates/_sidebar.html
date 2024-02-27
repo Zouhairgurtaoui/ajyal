@@ -1,4 +1,7 @@
-  
+
+    
+
+
   {% load static %}
   {% if user.is_authenticated %}
         {% if user.is_teacher %}
@@ -8,7 +11,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li  class="active">
-                        <a href="#" class="dashboard"><i class="material-icons">dashboard</i><span>Your Students</span></a>
+                        <a href="{% url "student_list" %}" class="dashboard"><i class="material-icons">dashboard</i><span>Your Students</span></a>
                 </li>
 		
 		      <div class="small-screen navbar-display">
@@ -43,10 +46,10 @@
 					<i class="material-icons">menu_book</i><span>Courses</span></a>
                     <ul class="collapse list-unstyled menu" id="homeSubmenu1">
                         <li>
-                            <a href="#">My Courses</a>
+                            <a href="{% url "course_list" %}">My Courses</a>
                         </li>
                         <li>
-                            <a href="#">Add Course</a>
+                            <a href="{% url "course_create" %}">Add Course</a>
                         </li>
                     </ul>
                 </li>
@@ -75,9 +78,9 @@
                
                <li class="">
                     <form method="post" action="{% url "user-logout" %}"  style="margin-bottom:0" >
-                    <i class="material-icons">logout</i>
+                    
                   {% csrf_token %}
-                    <button class="nav-link mx-2"  type="submit">Log out</button>
+                    <a><button class="btn-as-text"  type="submit"><i class="material-icons">logout</i><span>Log out</span></button></a>
                 </form>
                 </li>
 				
@@ -146,13 +149,12 @@
 				 
                
                <li class="">
-                <form method="post" action="{% url "user-logout" %}"  style="margin-bottom:0" >
-                    <i class="material-icons">logout</i>
-                  {% csrf_token %}
-                    <button class="nav-link mx-2"  type="submit">Log out</button>
-                </form>
+                    <form method="post" action="{% url "user-logout" %}"  style="margin-bottom:0" >
                     
-                </li> 
+                  {% csrf_token %}
+                    <a><button class="btn-as-text"  type="submit"><i class="material-icons">logout</i><span>Log out</span></button></a>
+                </form>
+                </li>
             </ul>
 
            

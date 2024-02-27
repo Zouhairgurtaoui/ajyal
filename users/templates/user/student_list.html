@@ -12,18 +12,17 @@
 {% block content %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
     
-  {% for course in courses %}
+  {% for student in students %}
     <div class="col-sm-4 ">
         <div class="card">
-          <img src="{{course.image.url}}" class="card-img-top small-img" alt="Image">
+          <img src="{{student.picture.url}}" class="card-img-top small-img" alt="Image">
           <div class="card-body">
-            <h5 class="card-title"><a href="{% url "course_detail" course.pk %}">{{course.title}}</a></h5>
+            <h5 class="card-title"><a href="{% url "user_profile" student.user.username %}">{{student.user.username}}</a></h5>
           </div>
         </div>
     </div>
   {% endfor %}
     
-</div>
 </div>
 
 {% if is_paginated %}

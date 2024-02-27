@@ -22,7 +22,8 @@ class QuizListView(ListView):
     ordering = ('-date_created', )
     context_object_name = 'quizzes'
     template_name = 'quiz/prof/quiz_change_list.html'
-
+    paginate_by = 10
+    
     def get_queryset(self):
         queryset = self.request.user.quizzes \
             .select_related('course') \
@@ -99,6 +100,7 @@ class QuizResultsView(UserPassesTestMixin,DetailView):
     model = Quiz
     context_object_name = 'quiz'
     template_name = 'quiz/prof/quiz_results.html'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         quiz = self.get_object()
@@ -220,7 +222,7 @@ class StudentQuizListView(ListView):
     ordering = ('-date_created', )
     context_object_name = 'quizzes'
     template_name = 'quiz/student/quiz_list.html'
-
+    paginate_by = 10
     def get_queryset(self):
         student = self.request.user.student
         student_modules = student.modules.all()
@@ -237,7 +239,7 @@ class TakenQuizListView(ListView):
     model = TakenQuiz
     context_object_name = 'taken_quizzes'
     template_name = 'quiz/student/taken_quiz_list.html'
-
+    paginate_by = 10
     def get_queryset(self):
         queryset = self.request.user.student.taken_quizzes \
             .select_related('quiz', 'quiz__course') \
