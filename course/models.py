@@ -14,14 +14,14 @@ class Filliere(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-         return self.name
+        return self.name
 
 class Module(models.Model):
     name = models.CharField(max_length=100)
     filliere = models.ManyToManyField(Filliere, related_name='modules')
 
     def __str__(self) -> str:
-         return self.name
+        return self.name
 
 class Course(models.Model):
     title = models.CharField(max_length=100)

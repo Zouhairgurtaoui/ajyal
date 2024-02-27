@@ -2,7 +2,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render,get_object_or_404
 from django.views.generic import (ListView,CreateView,UpdateView,DeleteView,DetailView)
 from django.utils.decorators import method_decorator
-from course.models import Course
+#from course.models import Course
 from users.decorators import student_required,teacher_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin

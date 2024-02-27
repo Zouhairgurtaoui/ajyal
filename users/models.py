@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.utils.translation import gettext_lazy as _
-from course.models import Filliere,Module
+from course.models import Filliere,Module,Course
 from quiz.models import Answer, Quiz
 from PIL import Image
 from django.conf import settings
 import os
 from django.utils import timezone
-from course.models import Course
+
 
 
 def user_directory_path_profile(instance, filename):
@@ -76,7 +76,7 @@ class Prof(models.Model):
 
 
 	def __str__(self) -> str:
-		return self.prof.username
+		return self.user.username
 
 class TakenQuiz(models.Model):
 	date = models.DateField(auto_now_add=timezone.now)
