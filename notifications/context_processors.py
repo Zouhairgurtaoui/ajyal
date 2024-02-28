@@ -11,6 +11,6 @@ def notifications(request):
         elif request.user.is_teacher:
             notifications = request.user.notifications.filter(is_read=False,is_for_teacher=True).order_by('-timestamp')
             
-        notification_count = notifications.count()
+        notification_count = notifications.filter(is_read=False).count()
         return {'notifications': notifications[:5] if notifications else None,'notification_count':notification_count}  
     return {}

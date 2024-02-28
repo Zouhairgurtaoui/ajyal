@@ -134,3 +134,15 @@ def store_reading_time(request,pk):
         visited_course.formatted_duration = formatted_duration
         visited_course.save()
     return JsonResponse({'success': True})
+
+@login_required
+def search_student(request):
+    search_text = request.POST.get('search')
+
+    results = Student.objects.filter(title__icontains = search_text,courses__prof=request.user)
+
+    context = {
+        'results':results
+    }
+
+    return render(request,'user/_search_results.html',context)

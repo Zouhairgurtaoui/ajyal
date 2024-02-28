@@ -78,3 +78,14 @@ class CourseUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         if course.prof == self.request.user:
             return True
         return False
+@login_required
+def search_course(request):
+    search_text = request.POST.get('search')
+
+    results = Course.objects.filter(title__icontains = search_text)
+
+    context = {
+        'results':results
+    }
+
+    return render(request,'course/_search_results.html',context)

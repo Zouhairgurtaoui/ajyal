@@ -8,3 +8,9 @@ urlpatterns = [
     path('delete/<int:pk>',views.CourseDeleteView.as_view(),name='course_delete'),
     path('update/<int:pk>',views.CourseUpdateView.as_view(),name='course_change'),
 ]
+
+htmx_urlpatterns =[
+    path('search-course/',views.search_course,name='search-course'),
+]
+
+urlpatterns += htmx_urlpatterns

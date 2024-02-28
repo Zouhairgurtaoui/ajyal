@@ -38,6 +38,8 @@
 	
 	<!--google material icon-->
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
   </head>
   <body>
   
@@ -58,7 +60,7 @@
         <div id="content">
             {% include "_topbar.html" %}
 			<div class="main-content">
-			<div class="row"></div>
+			
             {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
                   {{ message }}

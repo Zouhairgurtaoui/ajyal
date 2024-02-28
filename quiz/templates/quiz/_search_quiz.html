@@ -1,0 +1,19 @@
+
+
+<div class="row justify-content-end mr-4">
+    <form>
+    {% csrf_token %}
+        <input type="search"
+            hx-post="{% url "search-quiz" %}"
+            hx-target="#results"
+            hx-trigger="keyup changed delay:500ms"
+            name="search"
+            class ="form-control "
+            placeholder = "search quiz ..."
+        />
+    </form>
+
+</div>
+<div id="results" class="row justify-content-end ">
+    {% include "quiz/_search_results.html" %}
+</div>

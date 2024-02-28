@@ -1,15 +1,14 @@
 {% extends "_base.html" %}
 {% block title %}<title>Quizzes</title>{% endblock title %}
 {% block content %}
+ {% include "quiz/_search_quiz.html" %}
     <div class="row ">
         <div class="col-lg-15 col-md-12">
             <div class="card" style="min-height: 485px">
                 <div class="card-header card-header-text">
                     <h4 class="card-title">Quizzes</h4>
                         <p class="category">
-                                        {% if not quizzes %}
-                                            no quizzes yet
-                                        {% endif %}
+                                        
                         </p>
                 </div>
             
@@ -32,6 +31,10 @@
                                 <td>{{quiz.questions_count}}</td>
                                 <td><a href="{% url "student:take_quiz" quiz.pk %}" class="btn btn-primary">Start quiz</a></td>
                             </tr>
+                            {%empty%}
+                             <tr>
+                                    <td class="bg-light text-center font-italic" colspan="3">No  quiz .</td>
+                                </tr>
                                             
                         {% endfor %}              
                         </tbody>

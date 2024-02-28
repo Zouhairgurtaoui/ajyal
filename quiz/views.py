@@ -253,7 +253,7 @@ def take_quiz(request, pk):
     student = request.user.student
 
     if student.quizzes.filter(pk=pk).exists():
-        return render(request, 'student:taken_quiz.html')
+        return render(request, 'quiz/student/taken_quiz_list.html')
 
     total_questions = quiz.questions.count()
     unanswered_questions = student.get_unanswered_questions(quiz)
@@ -301,3 +301,15 @@ def take_quiz(request, pk):
         'form': form,
         'progress': progress
     })
+
+@login_required
+def search_quiz(request):
+    search_text = request.POST.get('search')
+
+    results = Quiz.objects.filter(name__icontains = search_text)
+
+    context = {
+        'results':results
+    }
+
+    return render(request,'quiz/_search_results.html',context)

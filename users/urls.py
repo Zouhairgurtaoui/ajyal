@@ -10,3 +10,9 @@ urlpatterns = [
     path('edit/profile/',views.edit_profile,name='edit_profile'),
     
 ]
+
+htmx_urlpatterns =[
+    path('search-student/',views.search_student,name='search-student'),
+]
+
+urlpatterns += htmx_urlpatterns

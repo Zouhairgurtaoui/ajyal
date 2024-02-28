@@ -19,3 +19,9 @@ urlpatterns = [
     path('<int:quiz_pk>/question/<int:question_pk>/delete/', views.QuestionDeleteView.as_view(), name='question_delete'),
    ],'quiz'),namespace='teacher')),
 ]
+
+htmx_urlpatterns =[
+    path('search-quiz/',views.search_quiz,name='search-quiz'),
+]
+
+urlpatterns += htmx_urlpatterns
