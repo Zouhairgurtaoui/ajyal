@@ -100,7 +100,7 @@
                                     {% for notification in notifications %}
                                     {% if notification.is_quiz_notif %}
                                         <li>
-                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "take_quiz" notification.course_notifications.quiz.pk %}{% endif %}">{{notification.content}}</a>
+                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "student:take_quiz" notification.quiz_notifications.quiz.pk %}{% endif %}">{{notification.content}}</a>
                                         </li>
                                     {% else %}
                                     <li>

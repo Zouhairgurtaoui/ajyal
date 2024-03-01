@@ -261,6 +261,7 @@ def take_quiz(request, pk):
     try:
         progress = 100 - round(((total_unanswered_questions - 1) / total_questions) * 100)
     except ZeroDivisionError:
+        messages.error(request,"This Quiz Has no Question yet")
         return redirect('student:quiz_list')
     question = unanswered_questions.first()
 
@@ -305,8 +306,10 @@ def take_quiz(request, pk):
 @login_required
 def search_quiz(request):
     search_text = request.POST.get('search')
-
-    results = Quiz.objects.filter(name__icontains = search_text)
+    if request.user.is_student:
+        results = Quiz.objects.filter(name__icontains = search_text,course__in=request.user.courses)
+    else:
+        results = Quiz.objects.filter(owner=request.user)
 
     context = {
         'results':results

@@ -74,15 +74,15 @@ def edit_profile(request):
                 u_form.save()
                 p_form.save()
                 messages.success(request,'your account has been Updated!')
-                return redirect('teacher_profile')
-            else:
-                u_form = UserUpdateForm(request.POST,instance=request.user)
-                p_form = StudentUpdateForm(request.POST,request.FILES,instance=request.user.student)
-                if u_form.is_valid() and p_form.is_valid():
-                    u_form.save()
-                    p_form.save()
-                    messages.success(request,'your account has been Updated!')
-                    return redirect('student_profile')
+                return redirect('edit_profile')
+        else:
+            u_form = UserUpdateForm(request.POST,instance=request.user)
+            p_form = StudentUpdateForm(request.POST,request.FILES,instance=request.user.student)
+            if u_form.is_valid() and p_form.is_valid():
+                u_form.save()
+                p_form.save()
+                messages.success(request,'your account has been Updated!')
+                return redirect('edit_profile')
     else:
         if request.user.is_teacher:
             u_form = UserUpdateForm(instance=request.user)
@@ -139,7 +139,7 @@ def store_reading_time(request,pk):
 def search_student(request):
     search_text = request.POST.get('search')
 
-    results = Student.objects.filter(title__icontains = search_text,courses__prof=request.user)
+    results = Student.objects.filter(user__username__icontains = search_text,courses__prof=request.user).distinct()
 
     context = {
         'results':results
