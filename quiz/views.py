@@ -309,7 +309,7 @@ def search_quiz(request):
     if request.user.is_student:
         results = Quiz.objects.filter(name__icontains = search_text,course__in=request.user.courses)
     else:
-        results = Quiz.objects.filter(owner=request.user)
+        results = Quiz.objects.filter(name__icontains=search_text,owner=request.user)
 
     context = {
         'results':results

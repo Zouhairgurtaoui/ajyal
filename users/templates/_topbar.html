@@ -18,18 +18,23 @@
                     <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">   
                             <li class="dropdown nav-item active">
-                                <a href="#" class="nav-link" data-toggle="dropdown" hx-post="">
+                                <a href="#" class="nav-link" data-toggle="dropdown" >
                                    <span class="material-icons">notifications</span>
 								   <span class="notification">{{notification_count | default:"0"}}</span>
                                </a>
+                               {% if notification_count > 0 %}
                                 <ul class="dropdown-menu">
                                     {% for notification in notifications %}
-                                    <li >
-                                    <a href="">{{notification.content}}</a>
+                                     <form>
+                                        {% csrf_token %}
+                                    <li hx-post="{% url "change-stat" notification.pk %}">
+                                    <a href="{% url "student_list" %}" >{{notification.content}}</a>
                                     </li>
+                                     </form>
                                 {% endfor %}
                                   
                                 </ul>
+                                {% endif %}
                             </li>
 
                             
@@ -50,8 +55,9 @@
 								   <span class="notification">{{notification_count | default:"0"}}</span>
                                </a>
                                <!-- notifications here-->
+                                {% if notification_count > 0  %}
                                 <ul class="dropdown-menu">
-                                    {% if notifications %}
+                                    
                                     {% for notification in notifications %}
                                     <form>
                                         {% csrf_token %}
@@ -64,16 +70,22 @@
                                     
                                     {% elif notification.is_course_notif %}
                                     
-                                    <li hx-post="{% url "change-stat" notification.pk%}">
+                                    <li hx-post="{% url "change-stat" notification.pk %}">
                                         <a href="{% if notification.course_notifications.course.pk %} {% url "course_detail" notification.course_notifications.course.pk %}{% endif %}">{{notification.content}}</a>
                                     </li>
                                     
+                                    {% else %}
+                                        <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="">{{notification.content}}</a>
+                                        </li>
                                     {% endif %}
                                     </form>
+                                  
                                     {% endfor %}
-                                    {% endif %}
+    
                                   
                                 </ul>
+                                {% endif %}
                             </li>
 
                             

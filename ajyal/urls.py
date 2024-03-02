@@ -27,7 +27,7 @@ urlpatterns = [
     path('',include('users.urls')),
     path('quiz/',include('quiz.urls')),
     path('course/',include('course.urls')),
-    path('notification/',include('notifications.urls')),
+    path('notifications/',include('notifications.urls')),
     path('login/',auth_views.LoginView.as_view(template_name='login.html',authentication_form=user_forms.UserLoginForm),name='user-login'),
     path('logout/',auth_views.LogoutView.as_view(template_name='logout.html'),name='user-logout'),
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='user/password_reset.html'), name='password_reset'),

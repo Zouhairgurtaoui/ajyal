@@ -7,7 +7,7 @@ from django.utils import timezone
 class Notification(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE,related_name='notifications')
     is_for_teacher = models.BooleanField(default=False)
-    content = models.CharField(max_length=600)
+    content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=timezone.now)
     filliere  = models.ForeignKey(Filliere,on_delete=models.PROTECT)
     is_quiz_notif = models.BooleanField(default=False)
