@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm,UsernameField
+from django.contrib.auth.forms import AuthenticationForm,UsernameField,SetPasswordForm
 from .models import Student,Prof, User
 
 class UserLoginForm(AuthenticationForm):
@@ -29,18 +29,20 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username','first_name','last_name']
 
 class StudentUpdateForm(forms.ModelForm):
-    picture = forms.FileField(label='Picture',
+    picture = forms.ImageField(label='Picture',
         widget=forms.FileInput(
         attrs={
-        'class': 'form-control',
+        'class': 'form-control'
     }))
 
     class Meta:
         model = Student
         fields = ['picture']
 
+   
+
 class ProfUpdateForm(forms.ModelForm):
-    picture = forms.FileField(label='Picture',
+    picture = forms.ImageField(label='Picture',
                               widget=forms.FileInput(
                                   attrs = {
                                         'class': 'form-control',
@@ -50,3 +52,15 @@ class ProfUpdateForm(forms.ModelForm):
     class Meta:
         model = Prof
         fields = ['picture']
+
+
+class UserSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(label='New Password',
+                                    widget=forms.PasswordInput(
+                                        attrs={'class':'form-control'}
+                                    ))
+    new_password2 = forms.CharField(label='Confirm New Password',
+                                    widget=forms.PasswordInput(
+                                        attrs={'class':'form-control'}
+                                    ))
+    

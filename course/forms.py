@@ -10,7 +10,7 @@ class CourseCreateForm(forms.ModelForm):
     file = forms.FileField(
         label='PDF File',
         widget=forms.FileInput(
-            attrs={'class':'form-control'}
+            attrs={'class':'form-control','type':'file'}
         )
     )
     module = forms.ModelChoiceField(
@@ -24,9 +24,11 @@ class CourseCreateForm(forms.ModelForm):
         model = Course
         fields = ('title','file','module')
 
+    
+
     def clean_file(self):
         file = self.cleaned_data.get('file')
         if file:
             if not file.name.endswith('.pdf'):
-                raise forms.ValidationError('Uploaded file is not a PDF')
+                return self.add_error('file',forms.ValidationError("Uploaded file is not a PDF"))
         return file

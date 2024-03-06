@@ -39,9 +39,10 @@
 {% block scripts %}
 {% if user.is_student %}
 <script src="{% static "js/reading_time.js" %}"></script>
+{{ course.pk|json_script:"course_id" }}
 <script>
   let startTime = new Date(); 
-  let course_id = {{course.pk}}
+  let course_id = JSON.parse(document.getElementById('course_id').textContent);
   window.addEventListener('beforeunload', function(event) {
     sendReadingSessionData(startTime,course_id);
   });

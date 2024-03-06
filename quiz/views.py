@@ -275,9 +275,9 @@ def take_quiz(request, pk):
                 is_quiz_end = request.POST.get('is_quiz_end')
                 if is_quiz_end == 'true':
                     correct_answers = student.quiz_student_answers.filter(answer__question__quiz=quiz, answer__is_correct=True).count()
-                    score = round((correct_answers / total_questions) * 100.0, 2)
+                    score = total_questions - correct_answers 
                     TakenQuiz.objects.create(student=student, quiz=quiz, score=score)
-                    if score < 50.0:
+                    if score < int(total_questions/2):
                         messages.warning(request, 'Better luck next time! Your score for the %s was %s.' % (quiz.name, score))
                     else:
                         messages.success(request, 'Congratulations! You completed the %s with success! You scored %s points.' % (quiz.name, score))
@@ -286,9 +286,9 @@ def take_quiz(request, pk):
                     return redirect('student:take_quiz', pk)
                 else:
                     correct_answers = student.quiz_student_answers.filter(answer__question__quiz=quiz, answer__is_correct=True).count()
-                    score = round((correct_answers / total_questions) * 100.0, 2)
+                    score = total_questions - correct_answers
                     TakenQuiz.objects.create(student=student, quiz=quiz, score=score)
-                    if score < 50.0:
+                    if score < int(total_questions/2):
                         messages.warning(request, 'Better luck next time! Your score for the %s was %s.' % (quiz.name, score))
                     else:
                         messages.success(request, 'Congratulations! You completed the %s with success! You scored %s points.' % (quiz.name, score))

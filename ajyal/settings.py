@@ -83,6 +83,8 @@ TEMPLATES = [
     },
 ]
 
+SESSION_COOKIE_HTTPONLY = True
+
 WSGI_APPLICATION = 'ajyal.wsgi.application'
 
 LOGIN_REDIRECT_URL= 'index'

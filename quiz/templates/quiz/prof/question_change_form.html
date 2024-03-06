@@ -63,13 +63,7 @@
             {% endfor %}
           </div>
         </div>
-        <p>
-          <small class="form-text text-muted"
-            >Your question may have at least <strong>2</strong> answers and
-            maximum <strong>10</strong> answers. Select at least one correct
-            answer.</small
-          >
-        </p>
+        
         <button type="submit" class="btn btn-success">Save changes</button>
         <a
           href="{% url 'teacher:quiz_change' quiz.pk %}"

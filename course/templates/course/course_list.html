@@ -11,7 +11,7 @@
           <img src="{{course.image.url}}" class="card-img-top" alt="Image">
           <div class="card-body">
             <h5 class="card-title"><a href="{% url "course_detail" course.pk %}">{{course.title}}</a></h5>
-            <p class="card-text">{{ course.prof.username }}</p>
+            <p class="card-text"><a href="{% url "user_profile" course.prof.username %}">{{ course.prof.username }}</a></p>
           </div>
         </div>
     </div>

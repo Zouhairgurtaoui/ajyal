@@ -37,7 +37,7 @@ def profile(request,username):
                 }
         return render(request,'user/student_profile.html',context=context)
     else:
-        courses= user.courses
+        courses= user.courses.all()
         quizzes = user.quizzes.annotate(questions_count=Count('questions', distinct=True))
 
         context = {

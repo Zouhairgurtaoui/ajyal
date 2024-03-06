@@ -82,7 +82,7 @@ class TakenQuiz(models.Model):
 	date = models.DateField(auto_now_add=timezone.now)
 	student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='taken_quizzes')
 	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='taken_quizzes')
-	score = models.FloatField()
+	score = models.IntegerField()
 	
 class StudentAnswer(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='quiz_answers')
