@@ -16,10 +16,10 @@ from .forms import UserUpdateForm,ProfUpdateForm,StudentUpdateForm
 
 def index(request):
     if request.user.is_authenticated:
-        if request.user.is_teacher:
-            return redirect('teacher:quiz_change_list')
-        elif request.user.is_student:
-            return redirect('student:quiz_list')
+        if request.user.is_student:
+            return redirect('course_list')
+        elif request.user.is_teacher:
+            return redirect('student_list')
         else:
             return redirect('admin/')
     return render(request,'home.html')
