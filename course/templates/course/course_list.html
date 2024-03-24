@@ -1,4 +1,24 @@
 {% extends "_base.html" %} 
+{% block head %}
+<style>
+  
+    .card {
+      position: relative;
+      overflow: hidden; /* Ensure profile image doesn't overflow outside the card */
+    }
+    .profile-image {
+      position: absolute;
+      top: 50%;
+      left: 60%;
+      transform: translate(100%, 100%);
+      z-index: 1; /* Ensure profile image appears on top of the main image */
+      border: 3px solid #fff; /* Optional: Add a border around the profile image */
+      border-radius: 50%; /* Make the profile image round */
+    }
+    
+    
+  </style>
+{% endblock head %}
 
 {% block content %}
 
@@ -6,13 +26,17 @@
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
   {% for course in courses %}
-    <div class="col-md-4 mb-4 " >
+    <div class="col-md-3 col-sm-3 mb-4 " >
         <div class="card">
-          <img src="{{course.image.url}}" class="card-img-top" alt="Image">
+          <a href="{% url "course_detail" course.pk %}"><img src="{{course.image.url}}" class="card-img-top"  alt="Image"></a>
+          <a href="{% url "user_profile" course.prof.username %}" class="">
+          <img src="{{course.prof.prof.picture.url}}" class="avatar img-fluid rounded-circle profile-image" width="35" alt="Profile Image">
+          </a>
           <div class="card-body">
             <h5 class="card-title"><a href="{% url "course_detail" course.pk %}">{{course.title}}</a></h5>
             <p class="card-text"><a href="{% url "user_profile" course.prof.username %}">{{ course.prof.username }}</a></p>
           </div>
+          
         </div>
     </div>
     {% empty %}

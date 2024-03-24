@@ -1,6 +1,4 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.forms import BaseModelForm
+
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
@@ -9,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView,ListView,DeleteView,UpdateView
 from users.decorators import student_required,teacher_required
-from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import NotificationAddForm
 
 @login_required
 def change_stat(request,pk):
@@ -25,10 +24,10 @@ def change_stat(request,pk):
 
     
 @method_decorator([teacher_required,],name='dispatch')
-class NotificationCreateView(CreateView):
+class NotificationCreateView(LoginRequiredMixin,CreateView):
     model=Notification
     template_name = 'notification/notification_create.html'
-    fields = ('content','filliere')
+    form_class = NotificationAddForm
     success_url = '/course/'
 
     def form_valid(self, form):

@@ -17,8 +17,12 @@ from .forms import UserUpdateForm,ProfUpdateForm,StudentUpdateForm
 def index(request):
     if request.user.is_authenticated:
         if request.user.is_student:
+            if not request.user.last_login:
+               return redirect('user_profile',request.user.username) 
             return redirect('course_list')
         elif request.user.is_teacher:
+            if not request.user.last_login:
+               return redirect('user_profile',request.user.username) 
             return redirect('student_list')
         else:
             return redirect('admin/')
@@ -29,7 +33,7 @@ def profile(request,username):
     user = get_object_or_404(User,username=username)
     if user.is_student:
         taken_quizzes = user.student.taken_quizzes.select_related('quiz', 'quiz__course').filter(quiz__course__prof=request.user).order_by('-quiz__date_created')
-        visited_courses = user.student.visited_courses.select_related('course', 'course__module').order_by('-duration')
+        visited_courses = user.student.visited_courses.filter(course__prof=request.user).select_related('course', 'course__module').order_by('-duration')
         context = {
                 'user_p':user,
                 'taken_quizzes':taken_quizzes,

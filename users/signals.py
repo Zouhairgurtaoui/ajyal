@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Prof,Student,User
+
 '''
 @receiver(post_save,sender=User)
 def create_profile(sender,instance,created,**kwargs):
@@ -16,12 +17,14 @@ def save_profile(sender,instance,**kwargs):
 '''
 
 @receiver(post_save,sender=User)
-def create_profile(sender,instance,created,**kwargs):
+def create_prof(sender,instance,created,**kwargs):
     if instance.is_teacher:
-        Prof.objects.create(user = instance)
+        if not hasattr(instance, 'prof'):
+            Prof.objects.create(user=instance)
 
 @receiver(post_save,sender=User)
-def save_profile(sender,instance,**kwargs):
+def save_prof(sender,instance,**kwargs):
     if instance.is_teacher:
-        instance.prof.save()
+        if hasattr(instance, 'prof'):
+            instance.prof.save()
 

@@ -17,14 +17,14 @@ class CourseListView(LoginRequiredMixin,ListView):
     ordering = ('-posted', )
     template_name = 'course/course_list.html'
     context_object_name = 'courses'
-    paginate_by = 10
+    paginate_by = 8
 
     def  get_queryset(self):
         if self.request.user.is_teacher:
             queryset= self.request.user.courses.annotate(course_count=Count('id', distinct=True)).order_by('-posted')
         else:
-            prefetch_queryset = self.request.user.student.modules.prefetch_related('courses')
-            queryset = Course.objects.filter(module__in=prefetch_queryset).distinct() .order_by('-posted') 
+            prefetch_queryset = self.request.user.student.filliere
+            queryset = Course.objects.filter(module__filliere=prefetch_queryset).distinct().order_by('-posted')
 
         return queryset
 
@@ -65,6 +65,7 @@ class CourseDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         if course.prof == self.request.user:
             return True
         return False
+
 @method_decorator([login_required,teacher_required],name='dispatch')
 class CourseUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Course
@@ -78,11 +79,18 @@ class CourseUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         if course.prof == self.request.user:
             return True
         return False
+
+
 @login_required
 def search_course(request):
     search_text = request.POST.get('search')
 
-    results = Course.objects.filter(title__icontains = search_text)
+    if search_text == '':
+        return render(request,'course/_search_results.html')
+    if request.user.is_student:
+        results = Course.objects.filter(title__icontains = search_text,module__filliere=request.user.student.filliere)
+    else:
+        results = request.user.courses.filter(title__icontains = search_text)
 
     context = {
         'results':results
