@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm,UsernameField,SetPasswordForm
-from .models import Student,Prof, User
+from .models import Student,Prof, User,Contact
 
 class UserLoginForm(AuthenticationForm):
     username = UsernameField(label='Email or Username',
@@ -63,4 +63,40 @@ class UserSetPasswordForm(SetPasswordForm):
                                     widget=forms.PasswordInput(
                                         attrs={'class':'form-control'}
                                     ))
-    
+
+
+class ContactForm(forms.ModelForm):
+    full_name = forms.CharField(widget=forms.TextInput(
+        attrs={'class':'form-control',
+               'id':'name',
+               'placeholder':'Enter your name...',
+               'data-sb-validations':'required'}
+               ))
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class':'form-control',
+               'id':'email',
+               'placeholder':'Enter your acadimic email...',
+               'data-sb-validations':'required'
+               }
+    ))
+    phone_number = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'class':'form-control',
+            'id':'phone',
+            'type':"tel",
+            'placeholder':'+212 634-567-890',
+            'data-sb-validations':'required'
+        }
+    ))
+    message = forms.CharField(widget=forms.Textarea(
+         attrs={'class':'form-control',
+               'id':'message',
+               'placeholder':'Enter your message here...',
+               'data-sb-validations':'required',
+                'style':"height: 10rem"
+               }
+    ))
+
+    class Meta:
+        model = Contact
+        fields = ('__all__')

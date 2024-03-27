@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .decorators import teacher_required
 from django.db.models import Count,Max
-from .forms import UserUpdateForm,ProfUpdateForm,StudentUpdateForm
+from .forms import UserUpdateForm,ProfUpdateForm,StudentUpdateForm,ContactForm
 
 def index(request):
     if request.user.is_authenticated:
@@ -26,7 +26,7 @@ def index(request):
             return redirect('student_list')
         else:
             return redirect('admin/')
-    return render(request,'home.html')
+    return redirect('user-login')
 
 @login_required
 def profile(request,username):
@@ -150,3 +150,18 @@ def search_student(request):
     }
 
     return render(request,'user/_search_results.html',context)
+
+
+def contact(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Your Message was sent succesfully. We will respond as soon as we can")
+            return redirect('user-login')
+    else:
+        form = ContactForm()
+
+    return render(request,'contact.html',context={
+        'form':form
+    })        

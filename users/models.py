@@ -48,7 +48,7 @@ class Student(models.Model):
 
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
-		SIZE = 250, 250
+		SIZE = 516, 516
 
 		if self.picture:
 			pic = Image.open(self.picture.path)
@@ -67,7 +67,7 @@ class Prof(models.Model):
 
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
-		SIZE = 250, 250
+		SIZE = 416, 416
 
 		if self.picture:
 			pic = Image.open(self.picture.path)
@@ -95,3 +95,15 @@ class VisitedCourses(models.Model):
 	end_time = models.DateTimeField()
 	duration = models.DurationField()
 	formatted_duration = models.CharField(max_length=100,null=True)
+
+
+
+class Contact(models.Model):
+	full_name = models.CharField(max_length=255)
+	email  = models.EmailField(max_length=255)
+	phone_number = models.CharField(max_length=14)
+	message = models.TextField()
+
+	def __str__(self):
+		return self.full_name
+	

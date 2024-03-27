@@ -275,7 +275,7 @@ def take_quiz(request, pk):
                 is_quiz_end = request.POST.get('is_quiz_end')
                 if is_quiz_end == 'true':
                     correct_answers = student.quiz_student_answers.filter(answer__question__quiz=quiz, answer__is_correct=True).count()
-                    score = total_questions - correct_answers 
+                    score = round((correct_answers / total_questions) * 100.0, 2) 
                     TakenQuiz.objects.create(student=student, quiz=quiz, score=score)
                     if score < int(total_questions/2):
                         messages.warning(request, 'Better luck next time! Your score for the %s was %s.' % (quiz.name, score))
@@ -286,7 +286,7 @@ def take_quiz(request, pk):
                     return redirect('student:take_quiz', pk)
                 else:
                     correct_answers = student.quiz_student_answers.filter(answer__question__quiz=quiz, answer__is_correct=True).count()
-                    score = total_questions - correct_answers
+                    score = round((correct_answers / total_questions) * 100.0, 2)
                     TakenQuiz.objects.create(student=student, quiz=quiz, score=score)
                     if score < int(total_questions/2):
                         messages.warning(request, 'Better luck next time! Your score for the %s was %s.' % (quiz.name, score))
@@ -306,6 +306,8 @@ def take_quiz(request, pk):
 @login_required
 def search_quiz(request):
     search_text = request.POST.get('search')
+    if search_text == '':
+        return render(request,'quiz/_search_results.html')
     if request.user.is_student:
         results = Quiz.objects.filter(name__icontains = search_text,course__in=request.user.courses)
     else:
