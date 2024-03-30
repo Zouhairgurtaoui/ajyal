@@ -6,4 +6,3 @@ admin.site.register(Filliere)
 
 admin.site.register(Module)
 
-admin.site.register(Course)
