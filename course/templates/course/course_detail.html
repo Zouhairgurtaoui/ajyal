@@ -1,0 +1,52 @@
+{% extends "_base.html" %} {% load static %}  {% block content %}
+<div class="row">
+  <div class="col-lg-15 col-md-12">
+    <div class="card" style="min-height: 485px">
+      <div class="card-header card-header-text flex-right">
+        {% if user.is_teacher %}
+        <div class="">
+          <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger"
+            >Delete <strong>{{course.title}}</strong></a
+          >
+          <a href="{% url 'course_change' course.pk %}" class="btn btn-info"
+            >Update <strong>{{course.title}}</strong></a
+          >
+        </div>
+        {% else %}
+        <div class="">
+          <strong> {{course.title}} </strong>
+          <span class="">By {{course.prof.username}} </span>
+        </div>
+        {% endif %}
+      </div>
+      <div class="card-content">
+        <object
+          data="{{pdf_url}}#toolbar=0"
+          width="100%"
+          height="600"
+          type="application/pdf"
+        >
+          <div>No PDF viewer available</div>
+        </object>
+
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block scripts %}
+{% if user.is_student %}
+<script src="{% static "js/reading_time.js" %}"></script>
+{{ course.pk|json_script:"course_id" }}
+<script>
+  let startTime = new Date(); 
+  let course_id = JSON.parse(document.getElementById('course_id').textContent);
+  window.addEventListener('beforeunload', function(event) {
+    sendReadingSessionData(startTime,course_id);
+  });
+</script>
+{% endif %}
+{% endblock scripts %}
+

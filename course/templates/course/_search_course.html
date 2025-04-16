@@ -1,0 +1,14 @@
+<div class="row justify-content-end mr-4">
+  <form>
+    {% csrf_token %}
+    <div class="form-outline ">
+      <input type="search" hx-post="{% url "search-course" %}"
+      hx-target="#results" hx-trigger="keyup changed delay:500ms" name="search"
+      class ="form-control form-control-md " placeholder = "search Course ..."
+      />
+    </div>
+  </form>
+</div>
+<div id="results" class="row justify-content-end">
+  {% include "course/_search_results.html" %}
+</div>

@@ -1,0 +1,23 @@
+{% extends "_base.html" %} {% block content %}
+<section style="height:100vh">
+<div class="row" >
+  <div class="col-md-6 col-sm-8 col-12">
+    <div class="col-md-8 col-sm-8 col-12">
+      <p>Are you sure you want to delete {{course.title}}</p>
+    </div>
+    <hr >
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a
+        href="{% url 'course_detail' course.pk %}"
+        class="btn btn-outline-secondary"
+        role="button"
+        >Nevermind</a
+      >
+    </form>
+  </div>
+</div>
+</section>
+
+{% endblock content %}

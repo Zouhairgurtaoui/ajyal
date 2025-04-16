@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+
+
+
+{% block content %}
+  <div class="row">
+  <div class="col-lg-7 col-md-12">
+    <div class="card" style="min-height: 485px">
+      <div class="card-header card-header-text">
+        <h2 class="mb-3">Confirm deletion</h2>
+  <p class="lead">Are you sure you want to delete the quiz <strong>"{{ quiz.name }}"</strong>? There is no going back.</p>
+      </div>
+  
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
+    <a href="{% url 'teacher:quiz_change' quiz.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
+  </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

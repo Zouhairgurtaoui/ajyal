@@ -1,0 +1,20 @@
+{% if results %}
+    <div class="col-sm-3 py-2">
+    <ul  class="list-group list-group-light list-group-small" >
+    {% for quiz in results %}
+        {% if user.is_student %}
+        <a href="{% url "student:take_quiz" quiz.pk %}" class="list-group-item list-group-item-action ">{{quiz.name}}</a>
+        {% else %}
+        <a href="{% url "teacher:quiz_results" quiz.pk %}" class="list-group-item list-group-item-action ">{{quiz.name}}</a>
+        {% endif %}
+        
+    
+    {% empty %}
+    <p>No quizzes Found</p>
+  {% endfor %}
+  </ul>
+</div>
+  {% endif %}
+
+
+            

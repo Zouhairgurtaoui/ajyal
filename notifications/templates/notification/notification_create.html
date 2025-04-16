@@ -1,0 +1,38 @@
+{% extends "_base.html" %} {% block content %}
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="card" style="min-height: 485px">
+      <div class="card-header card-header-text">
+        <h2 class="mb-3">Add a Notification</h2>
+      </div>
+
+      <div class="col-md-7 col-sm-8 col-12">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-outline mb-4">{{ form.content}}</div>
+
+          <div class="col-sm-3">
+            <p class="mb-0">{{ form.filliere.label}}</p>
+          </div>
+
+          <div class="col-sm-9">{{ form.filliere}}</div>
+          <hr />
+          <div
+            class="row align-items-center justify-items-center justify-content-center justify-content-lg-around"
+          >
+            <button type="submit" class="btn btn-success">Save</button>
+            <a
+              href="{% url 'course_list' %}"
+              class="btn btn-outline-secondary"
+              role="button"
+              >Nevermind</a
+            >
+          </div>
+          <hr />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

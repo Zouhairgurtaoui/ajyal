@@ -1,0 +1,16 @@
+{% if results %}
+    <div class="col-sm-4">
+    <ul  class="list-group list-group-light list-group-small" >
+    {% for student in results %}
+    
+        <a href="{% url "user_profile" student.user.username %}" class="list-group-item list-group-item-action ">{{student.user.username}}</a>
+    
+    {% empty %}
+    <p>No Students Found</p>
+  {% endfor %}
+  </ul>
+</div>
+  {% endif %}
+
+
+            

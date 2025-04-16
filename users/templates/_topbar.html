@@ -1,0 +1,103 @@
+{% load static %}
+{% if user.is_authenticated %}
+    <div class="top-navbar">
+            <nav class="navbar navbar-expand-sm">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
+                        <span class="material-icons">arrow_back_ios</span>
+                    </button>
+					
+                    <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="material-icons">menu</span>
+                    </button>
+    {% if user.is_teacher %}
+        
+
+                    <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">   
+                            <li class="dropdown nav-item active">
+                                <a href="#" class="nav-link" data-toggle="dropdown" >
+                                   <span class="material-icons">notifications</span>
+								   <span class="notification">{{notification_count | default:"0"}}</span>
+                               </a>
+                               {% if notification_count > 0 %}
+                                <ul class="dropdown-menu">
+                                    {% for notification in notifications %}
+                                     <form>
+                                        {% csrf_token %}
+                                    <li hx-post="{% url "change-stat" notification.pk %}">
+                                    <a href="{% url "student_list" %}" >{{notification.content}}</a>
+                                    </li>
+                                     </form>
+                                {% endfor %}
+                                  
+                                </ul>
+                                {% endif %}
+                            </li>
+
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url "edit_profile" %}">
+                                    <img src="{% if user.prof.picture %}{{user.prof.picture.url}}{% endif %} " class="img-fluid rounded-circle me-3" style="width:35px">
+								</a>
+                            </li>
+                        </ul>
+                    </div>
+               
+    {% else %}
+    <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">   
+                            <li class="dropdown nav-item active">
+                                <a href="#" class="nav-link" data-toggle="dropdown">
+                                   <span class="material-icons">notifications</span>
+								   <span class="notification">{{notification_count | default:"0"}}</span>
+                               </a>
+                               <!-- notifications here-->
+                                {% if notification_count > 0  %}
+                                <ul class="dropdown-menu">
+                                    
+                                    {% for notification in notifications %}
+                                    <form>
+                                        {% csrf_token %}
+                                    {% if notification.is_quiz_notif %}
+                                    
+                                        
+                                        <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "student:take_quiz" notification.quiz_notifications.quiz.pk %}{% endif %}" data-quiz-id={{notification.quiz_notifications.quiz.pk}}>{{notification.content}}</a>
+                                        </li>
+                                    
+                                    {% elif notification.is_course_notif %}
+                                    
+                                    <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="{% if notification.course_notifications.course.pk %} {% url "course_detail" notification.course_notifications.course.pk %}{% endif %}">{{notification.content}}</a>
+                                    </li>
+                                    
+                                    {% else %}
+                                        <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="">{{notification.content}}</a>
+                                        </li>
+                                    {% endif %}
+                                    </form>
+                                  
+                                    {% endfor %}
+    
+                                  
+                                </ul>
+                                {% endif %}
+                            </li>
+
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url "edit_profile" %}">
+                                    <img src="{% if user.student.picture %}{{user.student.picture.url}}{% endif %} " class="img-fluid rounded-circle me-3" width="35">
+								</a>
+                            </li>
+                        </ul>
+                    </div>
+    {% endif %}
+                </div>
+            </nav>
+	    </div>
+{% endif %}

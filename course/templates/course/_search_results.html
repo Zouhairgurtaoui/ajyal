@@ -1,0 +1,16 @@
+{% if results %}
+    <div class="col-sm-3 py-2">
+    <ul  class="list-group list-group-light list-group-small" >
+    {% for course in results %}
+    
+        <a href="{% url "course_detail" course.pk %}" class="list-group-item list-group-item-action ">{{course.title}}</a>
+    
+    {% empty %}
+    <p>No Courses Found</p>
+  {% endfor %}
+  </ul>
+</div>
+  {% endif %}
+
+
+            

@@ -1,0 +1,167 @@
+
+    
+
+
+  {% load static %}
+  {% if user.is_authenticated %}
+        {% if user.is_teacher %}
+            <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><img src="{% static "img/logo.png" %} " class="img-fluid"/><span>Ajyal</span></h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li  class="active">
+                        <a href="{% url "student_list" %}" class="dashboard"><i class="material-icons">dashboard</i><span>Your Students</span></a>
+                </li>
+		
+		      <div class="small-screen navbar-display">
+                <li class="dropdown d-lg-none d-md-block d-xl-none d-sm-block">
+                    <a href="#homeSubmenu0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<i class="material-icons">notifications</i><span> {{notification_count | default:"0"}} notification</span></a>
+                    <ul class="collapse list-unstyled menu" id="homeSubmenu0">
+                        <!-- notifications -->
+                                {% for notification in notifications %}
+                                    <li>
+                                    <a href="">{{notification.content}}</a>
+                                    </li>
+                                {% endfor %}
+                                    
+                    </ul>
+                </li>
+
+				 <li  class="d-lg-none d-md-block d-xl-none d-sm-block">
+                    <a href="{% url "edit_profile" %}"><i class="material-icons">person</i><span>Profile</span></a>
+                </li>		
+			</div>
+			  
+			<li class="">
+                   
+                    
+                  
+                    <a href="{% url "notification_create" %}"><i class="material-icons">notifications</i> <span>Create Notification</span></a>
+               
+                </li>
+                <li class="dropdown">
+                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<i class="material-icons">menu_book</i><span>Courses</span></a>
+                    <ul class="collapse list-unstyled menu" id="homeSubmenu1">
+                        <li>
+                            <a href="{% url "course_list" %}">My Courses</a>
+                        </li>
+                        <li>
+                            <a href="{% url "course_create" %}">Add Course</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<i class="material-icons">quiz</i><span>Quizzes</span></a>
+                    <ul class="collapse list-unstyled menu" id="pageSubmenu2">
+                        <li><a href="{% url "teacher:quiz_change_list" %}">My Quizzes</a></li>
+                        <li>
+                            <a href="{% url "teacher:quiz_add" %}">Add quiz</a>
+                        </li>
+                    </ul>
+                </li>
+				
+				 
+				
+				
+               
+			   
+			   
+			   
+               
+			   
+			     
+               
+               <li class="">
+                    <form method="post" action="{% url "user-logout" %}"  style="margin-bottom:0" >
+                    
+                  {% csrf_token %}
+                    <a><button class="btn-as-text"  type="submit"><i class="material-icons">logout</i><span>Log out</span></button></a>
+                </form>
+                </li>
+				
+               
+               
+            </ul>
+
+           
+        </nav>
+        {% else %}
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><img src="{% static 'img/logo.png' %} " class="img-fluid"/><span>Ajyal</span></h3>
+            </div>
+
+            <ul class="list-unstyled components">
+		
+		      <div class="small-screen navbar-display">
+                <li class="dropdown d-lg-none d-md-block d-xl-none d-sm-block">
+                    <a href="#homeSubmenu0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<i class="material-icons">notifications</i><span> {{notification_count | default:"0"}} notification</span></a>
+                    <ul class="collapse list-unstyled menu" id="homeSubmenu0">
+                                    {% for notification in notifications %}
+                                    {% if notification.is_quiz_notif %}
+                                        <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="{% if notification.quiz_notifications.quiz.pk %} {% url "student:take_quiz" notification.quiz_notifications.quiz.pk %}{% endif %}">{{notification.content}}</a>
+                                        </li>
+                                    {% else %}
+                                    <li hx-post="{% url "change-stat" notification.pk %}">
+                                        <a href="{% if notification.course_notifications.course.pk %} {% url "course_detail" notification.course_notifications.course.pk %}{% endif %}">{{notification.content}}</a>
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    
+                    </ul>
+                </li>
+				
+				
+				 <li  class="d-lg-none d-md-block d-xl-none d-sm-block">
+                    <a href="{% url "edit_profile" %}"><i class="material-icons">person</i><span>Profile</span></a>
+                </li>
+				
+				</div>
+			
+			
+                <li class="">
+                    <a href="{% url "course_list" %}"  >
+					<i class="material-icons">menu_book</i><span>Courses</span></a>
+                    
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+					<i class="material-icons">quiz</i><span>Quizzes</span></a>
+                    <ul class="collapse list-unstyled menu" id="pageSubmenu2">
+                        <li>
+                            <a href="{% url "student:quiz_list" %}">Quizzes</a>
+                        </li>
+                        <li>
+                            <a href="{% url "student:taken_quiz_list" %}">Taken Quizzes</a>
+                        </li>
+                    </ul>
+                </li>
+				
+				 
+               
+               <li class="">
+                    <form method="post" action="{% url "user-logout" %}"  style="margin-bottom:0" >
+                    
+                  {% csrf_token %}
+                    <a><button class="btn-as-text"  type="submit"><i class="material-icons">logout</i><span>Log out</span></button></a>
+                </form>
+                </li>
+            </ul>
+
+           
+        </nav>
+		
+		
+
+        {% endif %}
+     
+    {% endif %}
+        

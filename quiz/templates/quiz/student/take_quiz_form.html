@@ -1,0 +1,31 @@
+{% extends "_base.html" %} 
+{% block title %}<title>Take Quiz</title>{% endblock title %}
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-lg-8 col-md-12">
+  <div class="card" style="min-height: 485px">
+    <div class="card-header card-header-text">
+      <div class="progress mb-3">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          aria-valuenow="{{ progress }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style="width: {{ progress }}%"
+        ></div>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="streamline">
+        <h2 class="mb-3">{{ quiz.name }}</h2>
+        <p class="lead">{{ question.text }}</p>
+        <form method="post" novalidate>
+          {% csrf_token %} {{ form }}
+          <button type="submit" class="btn btn-primary">Next →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock content %}
+</div>

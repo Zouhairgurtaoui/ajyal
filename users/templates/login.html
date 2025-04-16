@@ -1,0 +1,69 @@
+ {% extends "index.html" %}
+ {% load static %}
+ {% block title %}
+  <title>Login</title>
+ {% endblock  %}
+ {% block content %}
+ 
+ <section>
+  {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+    <div class="container py-4">
+      <div
+      class="row gx-5 align-items-center justify-content-center "
+    >
+    <div class="col col-md-9">
+      <h2 style="text-align:center"> Welcome To Ajyal</h2>
+    <form method="post">
+        {% csrf_token %}
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example1">Email address or username</label>
+    {{form.username}}
+    
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example2">Password</label>
+    {{form.password}}
+    
+  </div>
+
+  <div class="form-outline mb-4">
+                                        {% if form.non_field_errors %}
+                                        {% for error in form.non_field_errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ error }}</strong>
+                                            </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+
+  
+
+    <div class="col">
+      <!-- Simple link -->
+      <a href="{% url "password_reset" %}">Forgot password?</a>
+    </div>
+    <hr>
+
+    <div class="d-grid">
+    <button type="submit" class="btn btn-primary rounded-pill btn-lg">Sign in</button>
+  </div>
+
+
+  
+
+  
+  
+</form>
+</div>
+</div>
+</div >
+</section>
+ {% endblock  %}
+    

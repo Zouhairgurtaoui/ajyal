@@ -1,0 +1,163 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+     {% block title %}{% endblock  %}
+	    <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+	    <!--css3-->
+        <link rel="stylesheet" href="{% static 'css/custom.css' %} ">
+		<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+	
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        
+        .btn-as-text {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: black;
+        cursor: pointer;
+        text-decoration: none; 
+    }
+    </style>
+    {% block head %}
+    
+    {% endblock head %}
+    
+	
+	
+	
+	<!--google material icon-->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  
+
+
+
+<div class="wrapper">
+
+
+    <div class="body-overlay">
+
+    </div>
+
+
+        {% include "_sidebar.html" %}
+
+        <!-- Page Content  -->
+        <div id="content">
+            {% include "_topbar.html" %}
+            
+			<div class="main-content" >
+                <div class="container" >
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+			{% block content %}
+            {% endblock content %}
+            </div>
+            
+            </div>
+
+					
+		
+						
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nav class="d-flex">
+                                <ul class="m-0 p-0">
+                                    <li>
+                                        <a href="#">
+                                                
+                                        </a>
+                                        </li>
+                                    <li>
+                                            <a href="#">
+                                                
+                                            </a>
+                                    </li>
+                                        <li>
+                                            <a href="#">
+                                                
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            
+                            </div>
+                            <div class="col-md-6">
+                            <p class="copyright d-flex justify-content-end"> &copy; Design by
+                                    <a href="https://t.me/zXgr05">zXgr</a> 
+                                </p>
+                            </div>
+                            </div>
+                                </div>
+            </footer>
+		
+	
+</div>
+
+
+
+
+
+</div>
+
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="{% static "js/jquery-3.3.1.slim.min.js" %}"></script>
+   <script src="{% static "js/popper.min.js" %}"></script>
+   <script src="{% static "js/bootstrap.min.js" %}"></script>
+   <script src="{% static "js/jquery-3.3.1.min.js" %} "></script>
+  
+  {% block scripts %}{% endblock scripts %}
+  <script type="text/javascript">
+  $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+				$('#content').toggleClass('active');
+            });
+			
+			 $('.more-button,.body-overlay').on('click', function () {
+                $('#sidebar,.body-overlay').toggleClass('show-nav');
+            });
+			
+        });
+
+
+     
+           
+       
+</script>
+
+
+
+  </body>
+  
+</html>
+
+
